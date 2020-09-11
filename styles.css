@@ -7,7 +7,7 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 11px 20px 1px;
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.938);
+  background: rgba(255, 255, 255, 0.937);
   padding: 30px;
   border-radius: 0px;
 }
@@ -35,6 +35,10 @@
   height: 200px;
 }
 
+.info-block {
+  margin-bottom: 20px;
+}
+
 h1 {
   padding: 0;
   margin-bottom: 0;
@@ -45,19 +49,61 @@ h2 {
   font-size: x-large;
   font-weight: 400;
   margin-bottom: 0;
+  margin-top: 0;
+}
+
+p {
+  font-family: Montserrat, "Times New Roman";
+  font-size: 16px;
+  font-weight: normal;
 }
 
 body {
-  font-size: 16px;
-  font-weight: normal;
   font-family: Alegreya, "Times New Roman", "Arial Narrow Bold", sans-serif,
     "Times New Roman", Times, serif;
   letter-spacing: 0.02em;
 }
 
-@media only screen 
-    and (max-height: 630px) 
-    and (orientation: landscape) {
+a {
+  color: #0500FF;
+}
+
+.projects {
+  padding: 20px;
+}
+
+.projects-header {
+  padding-left: 30px;
+}
+
+.project {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 11px 20px 1px;
+  padding: 20px 56px;
+  margin: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.description {
+  min-width: 300px;
+  flex: 1;
+}
+
+.mockup {
+  min-width: 400px;
+  flex: 1;
+}
+
+.mockup-image {
+  width: 100%;
+}
+
+.app-logo {
+  max-width:80px;
+}
+
+@media only screen and (max-height: 630px) and (orientation: landscape) {
   .wrapper {
     flex-direction: row;
     width: 100%;
@@ -77,8 +123,7 @@ body {
   }
 }
 
-@media only screen 
-    and (max-device-width: 812px) {
+@media only screen and (max-device-width: 812px) {
   .wrapper {
     box-shadow: none;
   }
