@@ -56,6 +56,7 @@ p {
   font-family: Montserrat, "Times New Roman";
   font-size: 16px;
   font-weight: normal;
+  padding-right: 30px;
 }
 
 body {
@@ -78,7 +79,6 @@ a {
 
 .project {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 11px 20px 1px;
-  padding: 20px 56px;
   margin: 30px;
   display: flex;
   flex-direction: row;
@@ -87,12 +87,15 @@ a {
 
 .description {
   min-width: 300px;
+  padding: 30px;
   flex: 1;
 }
 
 .mockup {
-  min-width: 400px;
+  min-width: 300px;
   flex: 1;
+  padding-right: 30px;
+  max-width: 600px;
 }
 
 .mockup-image {
@@ -124,7 +127,7 @@ a {
 }
 
 @media only screen and (max-device-width: 812px) {
-  .wrapper {
+  .wrapper, .project {
     box-shadow: none;
   }
 }
