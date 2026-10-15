@@ -9,6 +9,10 @@
   --panel: #f4f4f6;
   --blue: #2b59ff;
   --blue-press: #1d43d6;
+  --scape-far: #f5f5f7;
+  --scape-mid: #eeeef1;
+  --scape-near: #e6e6ea;
+  --scape-line: #a8a8b0;
 
   --font: "Schibsted Grotesk", -apple-system, "Segoe UI", system-ui, sans-serif;
 
@@ -182,7 +186,9 @@ a:hover {
   font-weight: 500;
   font-size: 17px;
   text-decoration: none;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .nav a:hover {
@@ -202,7 +208,122 @@ a:hover {
 
 /* Hero */
 
+.hero-wrap {
+  position: relative;
+  overflow: clip;
+  margin-bottom: clamp(20px, 2.4vw, 32px);
+}
+
+/* The view from Thun, pale enough to sit behind the headline. */
+.hero-scape {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: clamp(720px, 100%, 1600px);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 1600 / 300;
+  translate: -50% 0;
+  /* Fade out at the sides, and let the foreground dissolve into the lake. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 10%, #000 90%, transparent),
+    linear-gradient(to bottom, #000 72%, transparent 98%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 10%, #000 90%, transparent),
+    linear-gradient(to bottom, #000 72%, transparent 98%);
+  mask-composite: intersect;
+}
+
+.scape-layer {
+  transform: translate(
+    calc(var(--px, 0) * var(--depth) * -1px),
+    calc(var(--py, 0) * var(--depth) * -0.4px)
+  );
+  transition: transform 1.4s var(--ease-out);
+}
+
+[data-parallax="off"] .scape-layer {
+  transform: none;
+}
+
+.scape-far .scape-fill {
+  fill: var(--scape-far);
+}
+
+.scape-mid .scape-fill {
+  fill: var(--scape-mid);
+}
+
+.scape-near .scape-fill,
+.castle {
+  fill: var(--scape-near);
+}
+
+/* Hovering "Thun" draws the skyline in ink, nearest ridge first. */
+.ridge {
+  fill: none;
+  stroke: var(--scape-line);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.7s var(--ease-out);
+}
+
+.castle {
+  stroke: var(--scape-line);
+  stroke-opacity: 0;
+  stroke-width: 3.2;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+  transition: stroke-opacity 0.4s var(--ease-out);
+}
+
+.hero-wrap:not([data-draw="off"]):has(.thun:hover) .ridge {
+  stroke-dashoffset: 0;
+  transition-duration: 1.8s;
+}
+
+.hero-wrap:not([data-draw="off"]):has(.thun:hover) .scape-mid .ridge {
+  transition-delay: 0.12s;
+}
+
+.hero-wrap:not([data-draw="off"]):has(.thun:hover) .scape-far .ridge {
+  transition-delay: 0.24s;
+}
+
+.hero-wrap:not([data-draw="off"]):has(.thun:hover) .castle {
+  stroke-opacity: 1;
+  transition-duration: 0.8s;
+  transition-delay: 0.5s;
+}
+
+/* No hover on touch screens: draw the skyline once instead. */
+@media (hover: none) {
+  .hero-wrap:not([data-draw="off"]) .ridge {
+    animation: scape-draw 2s var(--ease-out) 0.5s both;
+  }
+
+  .hero-wrap:not([data-draw="off"]) .castle {
+    animation: castle-ink 0.8s var(--ease-out) 1s both;
+  }
+}
+
+@keyframes scape-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes castle-ink {
+  to {
+    stroke-opacity: 1;
+  }
+}
+
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   align-items: end;
@@ -214,6 +335,8 @@ a:hover {
 @media (max-width: 960px) {
   .hero {
     grid-template-columns: 1fr;
+    /* Stacked text would cover the whole skyline; let the hills sit below it. */
+    padding-bottom: calc(clamp(720px, 100vw, 1600px) * 0.12);
   }
 }
 
@@ -226,7 +349,7 @@ a:hover {
   text-wrap: balance;
 }
 
-.lede {
+.lead {
   max-width: 34ch;
   padding-bottom: 0.4em;
   color: var(--ink-soft);
@@ -234,6 +357,25 @@ a:hover {
   line-height: 1.4;
   letter-spacing: -0.01em;
   text-wrap: pretty;
+}
+
+/* A paper halo, so skyline lines fade out before they touch a letter. */
+.hero .lead {
+  text-shadow:
+    0 0 3px var(--paper),
+    0 0 6px var(--paper),
+    0 0 10px var(--paper);
+}
+
+/* High contrast users asked for less clutter, not a skyline behind text. */
+@media (forced-colors: active) {
+  .hero-scape {
+    display: none;
+  }
+
+  .hero .lead {
+    text-shadow: none;
+  }
 }
 
 /* Project grid */
@@ -253,7 +395,9 @@ a:hover {
   background: var(--tint, var(--panel));
   color: var(--ink);
   text-decoration: none;
-  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+  transition:
+    transform 0.6s var(--ease-out),
+    box-shadow 0.6s var(--ease-out);
 }
 
 .panel:hover {
@@ -387,7 +531,7 @@ a:hover {
   text-wrap: balance;
 }
 
-.project-lede {
+.project-lead {
   margin-top: 18px;
   font-size: clamp(20px, 1.7vw, 23px);
   line-height: 1.4;
@@ -395,7 +539,7 @@ a:hover {
   text-wrap: pretty;
 }
 
-.project-body > p:not(.project-lede) {
+.project-body > p:not(.project-lead) {
   margin-top: 16px;
   color: var(--ink-soft);
   text-wrap: pretty;
@@ -536,7 +680,9 @@ a:hover {
 .js .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
 }
 
 .js .reveal.is-in {
@@ -623,6 +769,15 @@ a:hover {
     grid-template-columns: 1fr;
     gap: 2px;
   }
+
+  /* The skyline renders at under half scale here; keep its lines readable. */
+  .ridge {
+    stroke-width: 2.6;
+  }
+
+  .castle {
+    stroke-width: 5;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -634,6 +789,8 @@ a:hover {
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
   }
 
   .js .reveal,

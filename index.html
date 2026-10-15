@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap">
-    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="styles.css?v=8">
     <script>document.documentElement.classList.add('js');</script>
 </head>
 
@@ -37,10 +37,36 @@
     </header>
 
     <main id="top">
-        <section class="hero container">
-            <h1>We build apps in&nbsp;Thun.</h1>
-            <p class="lede">We’re Kasia and Yannis. We make mobile apps we care about.</p>
-        </section>
+        <!-- The view from Thun: Eiger, Mönch, Jungfrau, the Niesen, the Stockhorn, and Schloss Thun on its hill.
+             Switch an effect off with data-parallax="off" or data-draw="off" here, or ?parallax=off / ?draw=off in the URL. -->
+        <div class="hero-wrap" data-parallax="on" data-draw="on">
+            <svg class="hero-scape" viewBox="0 0 1600 300" aria-hidden="true" focusable="false">
+                <g class="scape-layer scape-far" style="--depth:6">
+                    <path class="scape-fill"
+                        d="M-120 330V214L-40 206L30 192L90 198L150 176L196 182L238 152L262 134L282 128L300 140L322 162L350 168L380 150L410 132L432 124L456 136L486 150L512 144L548 122L574 108L596 112L622 130L660 156L702 176L760 196L840 206L960 212L1100 204L1200 196L1300 202L1420 196L1540 206L1720 214V330Z" />
+                    <path class="ridge" pathLength="1"
+                        d="M-120 214L-40 206L30 192L90 198L150 176L196 182L238 152L262 134L282 128L300 140L322 162L350 168L380 150L410 132L432 124L456 136L486 150L512 144L548 122L574 108L596 112L622 130L660 156L702 176L760 196L840 206L960 212L1100 204L1200 196L1300 202L1420 196L1540 206L1720 214" />
+                </g>
+                <g class="scape-layer scape-mid" style="--depth:14">
+                    <path class="scape-fill"
+                        d="M-120 330V250L120 244L340 240L480 232L560 222L650 176L726 108L800 44L872 106L944 166L1010 206L1090 210L1170 186L1236 152L1282 118L1306 98L1322 90L1340 92L1356 110L1394 136L1446 164L1520 196L1620 222L1720 236V330Z" />
+                    <path class="ridge" pathLength="1"
+                        d="M-120 250L120 244L340 240L480 232L560 222L650 176L726 108L800 44L872 106L944 166L1010 206L1090 210L1170 186L1236 152L1282 118L1306 98L1322 90L1340 92L1356 110L1394 136L1446 164L1520 196L1620 222L1720 236" />
+                </g>
+                <g class="scape-layer scape-near" style="--depth:28">
+                    <path class="castle"
+                        d="M838 262V186H854V262ZM840 186L846 154L852 186ZM888 262V150H952V262ZM893 150L910 122H930L947 150ZM897 136L903 110L909 136ZM931 136L937 110L943 136ZM877 262V140H897V262ZM875 141L887 100L899 141ZM943 262V140H963V262ZM941 141L953 100L965 141ZM963 262V188H1004V262ZM961 189L974 176H994L1006 189Z" />
+                    <path class="scape-fill"
+                        d="M-120 330V284Q160 276 420 282Q620 288 760 276Q820 262 860 238Q900 220 940 218Q990 220 1030 244Q1080 270 1180 280Q1450 288 1720 282V330Z" />
+                    <path class="ridge" pathLength="1"
+                        d="M-120 284Q160 276 420 282Q620 288 760 276Q820 262 860 238Q900 220 940 218Q990 220 1030 244Q1080 270 1180 280Q1450 288 1720 282" />
+                </g>
+            </svg>
+            <section class="hero container">
+                <h1>We build apps in&nbsp;<span class="thun">Thun</span>.</h1>
+                <p class="lead">We’re Kasia and Yannis. We make mobile apps we care about.</p>
+            </section>
+        </div>
 
         <section id="work" class="work container">
             <h2 class="visually-hidden">Projects</h2>
@@ -93,7 +119,7 @@
             <div class="project-body">
                 <img class="app-icon" src="media/sow-logo.png" alt="Swiss-O-Week logo" width="120" height="120">
                 <h2>Swiss-O-Week 2021</h2>
-                <p class="project-lede">Official companion app for the multi-day orienteering event Swiss-O-Week 2021 in
+                <p class="project-lead">Official companion app for the multi-day orienteering event Swiss-O-Week 2021 in
                     Arosa.</p>
                 <p>Push notifications, plus everything about the event and each stage. Follow your friends, see their
                     start times for every stage day and check results as they come in.</p>
@@ -122,7 +148,7 @@
             <div class="project-body">
                 <img class="app-icon" src="media/myoapp-logo.png" alt="MyOApp logo" width="120" height="120">
                 <h2>MyOApp</h2>
-                <p class="project-lede">Every orienteering event in Switzerland, in one place. See what’s on
+                <p class="project-lead">Every orienteering event in Switzerland, in one place. See what’s on
                     near you.</p>
                 <p>Pick your regions and favorite events, and they show up on your dashboard. Open an event for
                     directions, start lists, results, maps and more. Comes in light and dark.</p>
@@ -187,6 +213,33 @@
                 });
             }, { rootMargin: '0px 0px -10% 0px' });
             els.forEach(function (el) { io.observe(el); });
+        })();
+
+        (function () {
+            var wrap = document.querySelector('.hero-wrap');
+            if (!wrap) return;
+            var query = new URLSearchParams(location.search);
+            ['parallax', 'draw'].forEach(function (key) {
+                if (query.get(key) === 'off') wrap.dataset[key] = 'off';
+            });
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            var frame;
+            wrap.addEventListener('pointermove', function (e) {
+                if (wrap.dataset.parallax === 'off') return;
+                var r = wrap.getBoundingClientRect();
+                var x = (e.clientX - r.left) / r.width * 2 - 1;
+                var y = (e.clientY - r.top) / r.height * 2 - 1;
+                cancelAnimationFrame(frame);
+                frame = requestAnimationFrame(function () {
+                    wrap.style.setProperty('--px', x.toFixed(3));
+                    wrap.style.setProperty('--py', y.toFixed(3));
+                });
+            });
+            wrap.addEventListener('pointerleave', function () {
+                cancelAnimationFrame(frame);
+                wrap.style.setProperty('--px', 0);
+                wrap.style.setProperty('--py', 0);
+            });
         })();
     </script>
 </body>
